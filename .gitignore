@@ -1,0 +1,20 @@
+# Podaci i modeli se NE commituju (vidi data/README.md)
+data/*
+!data/README.md
+*.zip
+*.pt
+*.pth
+runs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
