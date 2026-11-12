@@ -14,15 +14,15 @@ Glavno istraživačko pitanje je da li korištenje referentne (template) slike m
 ## Trenutni status
 
 - [x] Skelet repoa, učitavanje DeepPCB-a, podjela po grupama, konverzija u YOLO format
-- [ ] Zajednička evaluacija (`src/evaluation/`): IoU 0.5, 0.33, P/R/F1 i mAP
+- [x] Zajednička evaluacija (`src/evaluation/`): metrike, analiza grešaka, poređenje i robusnost
 - [ ] EDA (distribucija klasa, veličine boxova i pregled anotacija)
 - [ ] Eksperiment 1: OpenCV + Random Forest/SVM
 - [ ] Eksperiment 2: Faster R-CNN
 - [ ] Eksperiment 3: YOLO baseline + YOLO s template informacijama + ablacija
 - [ ] Eksperiment 4: RT-DETR
-- [ ] Robusnost, demo, poster i izvještaj
+- [ ] Robusnost modela, demo, poster i izvještaj
 
-Plan rada, istraživačka pitanja i nosioci: [`docs/PLAN.md`](docs/PLAN.md) · Format predikcija: [`docs/FORMAT.md`](docs/FORMAT.md) · Dnevnik eksperimenata: [`docs/experiments.md`](docs/experiments.md)
+Plan rada, istraživačka pitanja i nosioci: [`docs/PLAN.md`](docs/PLAN.md) · Format predikcija i alati za evaluaciju: [`docs/FORMAT.md`](docs/FORMAT.md) · Dnevnik eksperimenata: [`docs/experiments.md`](docs/experiments.md)
 
 ## Problem i dataset
 
@@ -41,17 +41,32 @@ Potpun opis problema i pregled literature: [`docs/PROBLEM.md`](docs/PROBLEM.md).
 3. **YOLO + template** – kontrolisano poređenje običnog YOLO baseline modela s varijantom koja koristi testnu sliku, template sliku i njihovu razliku. Ablacijom se ispituje doprinos pojedinačnih ulaza.
 4. **RT-DETR** – transformer-based detektor objekata.
 
-
 ## Pokretanje
 
 ```bash
 git clone https://github.com/bmasovic1/MPVI-CircuitVision
 cd MPVI-CircuitVision
 python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+python -m pip install numpy pillow matplotlib          # dovoljno za podatke i evaluaciju
 python scripts/download_data.py                        # preuzima DeepPCB u data/
 python -m src.data.to_yolo                             # pravi data/yolo (train/val/test)
+python -m src.evaluation.check_fake                    # provjera evaluacije, mora ispisati SVE PROVJERE PROŠLE
 ```
+
+Modeli se treniraju na Google Colabu (GPU), gdje su dostupni i ostali paketi (`ultralytics`, `torch`, `torchvision`).
+Puni popis paketa je u `requirements.txt`; lokalna instalacija svih paketa nije potrebna za podatke i evaluaciju.
+
+## Evaluacija modela
+
+Svaki model zapisuje predikcije u `results/<eksperiment>/predictions_val.json` u formatu iz [`docs/FORMAT.md`](docs/FORMAT.md)
+(klase 1-6, pikselne koordinate 640×640), a zatim:
+
+```bash
+python -m src.evaluation.evaluate --pred results/<eksperiment>/predictions_val.json --split val
+```
+
+Analiza grešaka, tabela poređenja, mjerenje vremena i robusnost opisani su u [`docs/FORMAT.md`](docs/FORMAT.md).
+Svi modeli se mjere istim kodom, na istom validacijskom skupu; test skup se koristi samo za konačno poređenje.
 
 ## Struktura
 
@@ -61,7 +76,7 @@ src/experiment_1_classical/       OpenCV oduzimanje + Random Forest/SVM
 src/experiment_2_faster_rcnn/     Faster R-CNN (torchvision)
 src/experiment_3_yolo_template/   YOLO baseline, YOLO + template, ablacija
 src/experiment_4_rtdetr/          RT-DETR
-src/evaluation/                   zajedničke metrike, robusnost i poređenje
+src/evaluation/                   zajedničke metrike, analiza grešaka, poređenje i robusnost
 results/                          predikcije i results.csv (format: docs/FORMAT.md)
 scripts/                          pomoćne skripte
 notebooks/                        Colab i EDA notebookovi
@@ -74,7 +89,6 @@ demo/                             demo aplikacija/skripta
 - Plan i podjela posla: [`docs/PLAN.md`](docs/PLAN.md)
 - Dnevnik eksperimenata: [`docs/experiments.md`](docs/experiments.md)
 - Zajednički dokument tima: https://docs.google.com/document/d/1ndZP65o3jClo5vU07Cjei9QkXWC-h4XX1Xx2fHTHnPo/edit?tab=t.0
-
 
 ## Podjela rada
 
