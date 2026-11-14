@@ -1,0 +1,494 @@
+{
+  "pairs": 1500,
+  "trainval": 1000,
+  "test": 500,
+  "val": 248,
+  "train": 752,
+  "temp_files_total": 1501,
+  "temp_files_unused": [
+    "90100034_temp.jpg"
+  ],
+  "unique_templates": 1498,
+  "duplicate_test_images": 0,
+  "groups": {
+    "group00041": {
+      "trainval": 200,
+      "test": 21,
+      "unique_templates": 221,
+      "boxes": {
+        "open": 304,
+        "short": 212,
+        "mousebite": 372,
+        "spur": 273,
+        "copper": 245,
+        "pin-hole": 236
+      }
+    },
+    "group12000": {
+      "trainval": 0,
+      "test": 14,
+      "unique_templates": 14,
+      "boxes": {
+        "open": 23,
+        "short": 19,
+        "mousebite": 11,
+        "spur": 15,
+        "copper": 14,
+        "pin-hole": 11
+      }
+    },
+    "group12100": {
+      "trainval": 0,
+      "test": 146,
+      "unique_templates": 146,
+      "boxes": {
+        "open": 178,
+        "short": 131,
+        "mousebite": 177,
+        "spur": 145,
+        "copper": 143,
+        "pin-hole": 145
+      }
+    },
+    "group12300": {
+      "trainval": 0,
+      "test": 98,
+      "unique_templates": 98,
+      "boxes": {
+        "open": 137,
+        "short": 80,
+        "mousebite": 112,
+        "spur": 86,
+        "copper": 89,
+        "pin-hole": 96
+      }
+    },
+    "group13000": {
+      "trainval": 198,
+      "test": 18,
+      "unique_templates": 216,
+      "boxes": {
+        "open": 211,
+        "short": 141,
+        "mousebite": 328,
+        "spur": 262,
+        "copper": 255,
+        "pin-hole": 254
+      }
+    },
+    "group20085": {
+      "trainval": 291,
+      "test": 34,
+      "unique_templates": 323,
+      "boxes": {
+        "open": 508,
+        "short": 474,
+        "mousebite": 460,
+        "spur": 394,
+        "copper": 317,
+        "pin-hole": 275
+      }
+    },
+    "group44000": {
+      "trainval": 50,
+      "test": 50,
+      "unique_templates": 100,
+      "boxes": {
+        "open": 160,
+        "short": 120,
+        "mousebite": 147,
+        "spur": 111,
+        "copper": 99,
+        "pin-hole": 110
+      }
+    },
+    "group50600": {
+      "trainval": 50,
+      "test": 29,
+      "unique_templates": 79,
+      "boxes": {
+        "open": 85,
+        "short": 70,
+        "mousebite": 72,
+        "spur": 72,
+        "copper": 57,
+        "pin-hole": 76
+      }
+    },
+    "group77000": {
+      "trainval": 100,
+      "test": 7,
+      "unique_templates": 107,
+      "boxes": {
+        "open": 89,
+        "short": 76,
+        "mousebite": 107,
+        "spur": 83,
+        "copper": 90,
+        "pin-hole": 113
+      }
+    },
+    "group90100": {
+      "trainval": 0,
+      "test": 74,
+      "unique_templates": 74,
+      "boxes": {
+        "open": 109,
+        "short": 88,
+        "mousebite": 76,
+        "spur": 67,
+        "copper": 70,
+        "pin-hole": 73
+      }
+    },
+    "group92000": {
+      "trainval": 111,
+      "test": 9,
+      "unique_templates": 120,
+      "boxes": {
+        "open": 138,
+        "short": 95,
+        "mousebite": 103,
+        "spur": 117,
+        "copper": 95,
+        "pin-hole": 112
+      }
+    }
+  },
+  "groups_trainval": [
+    "group00041",
+    "group13000",
+    "group20085",
+    "group44000",
+    "group50600",
+    "group77000",
+    "group92000"
+  ],
+  "groups_test": [
+    "group00041",
+    "group12000",
+    "group12100",
+    "group12300",
+    "group13000",
+    "group20085",
+    "group44000",
+    "group50600",
+    "group77000",
+    "group90100",
+    "group92000"
+  ],
+  "groups_val": [
+    "group13000",
+    "group44000"
+  ],
+  "boxes": {
+    "train": {
+      "images": 752,
+      "boxes": 5150,
+      "per_image": {
+        "mean": 6.85,
+        "median": 7.0,
+        "min": 1.0,
+        "p5": 4.0,
+        "p95": 10.0,
+        "max": 15.0
+      },
+      "per_class": {
+        "open": 1003,
+        "short": 830,
+        "mousebite": 1000,
+        "spur": 848,
+        "copper": 730,
+        "pin-hole": 739
+      },
+      "images_with_class": {
+        "open": 674,
+        "short": 584,
+        "mousebite": 623,
+        "spur": 598,
+        "copper": 617,
+        "pin-hole": 642
+      },
+      "distinct_classes_per_image": 4.97
+    },
+    "val": {
+      "images": 248,
+      "boxes": 1723,
+      "per_image": {
+        "mean": 6.95,
+        "median": 7.0,
+        "min": 3.0,
+        "p5": 4.0,
+        "p95": 11.0,
+        "max": 13.0
+      },
+      "per_class": {
+        "open": 280,
+        "short": 198,
+        "mousebite": 379,
+        "spur": 294,
+        "copper": 280,
+        "pin-hole": 292
+      },
+      "images_with_class": {
+        "open": 188,
+        "short": 149,
+        "mousebite": 233,
+        "spur": 213,
+        "copper": 221,
+        "pin-hole": 235
+      },
+      "distinct_classes_per_image": 5.0
+    },
+    "test": {
+      "images": 500,
+      "boxes": 3140,
+      "per_image": {
+        "mean": 6.28,
+        "median": 6.0,
+        "min": 2.0,
+        "p5": 4.0,
+        "p95": 9.0,
+        "max": 13.0
+      },
+      "per_class": {
+        "open": 659,
+        "short": 478,
+        "mousebite": 586,
+        "spur": 483,
+        "copper": 464,
+        "pin-hole": 470
+      },
+      "images_with_class": {
+        "open": 482,
+        "short": 368,
+        "mousebite": 413,
+        "spur": 373,
+        "copper": 403,
+        "pin-hole": 438
+      },
+      "distinct_classes_per_image": 4.95
+    },
+    "trainval": {
+      "images": 1000,
+      "boxes": 6873,
+      "per_image": {
+        "mean": 6.87,
+        "median": 7.0,
+        "min": 1.0,
+        "p5": 4.0,
+        "p95": 10.0,
+        "max": 15.0
+      },
+      "per_class": {
+        "open": 1283,
+        "short": 1028,
+        "mousebite": 1379,
+        "spur": 1142,
+        "copper": 1010,
+        "pin-hole": 1031
+      },
+      "images_with_class": {
+        "open": 862,
+        "short": 733,
+        "mousebite": 856,
+        "spur": 811,
+        "copper": 838,
+        "pin-hole": 877
+      },
+      "distinct_classes_per_image": 4.98
+    }
+  },
+  "size_px": {
+    "all": {
+      "mean": 36.68,
+      "median": 34.41,
+      "min": 20.0,
+      "p5": 27.5,
+      "p95": 54.34,
+      "max": 129.42
+    },
+    "width": {
+      "mean": 38.93,
+      "median": 35.0,
+      "min": 18.0,
+      "p5": 27.0,
+      "p95": 64.0,
+      "max": 173.0
+    },
+    "height": {
+      "mean": 35.67,
+      "median": 33.0,
+      "min": 19.0,
+      "p5": 25.0,
+      "p95": 56.0,
+      "max": 152.0
+    },
+    "area_fraction_percent": {
+      "mean": 0.35,
+      "median": 0.29,
+      "min": 0.1,
+      "p5": 0.18,
+      "p95": 0.72,
+      "max": 4.09
+    }
+  },
+  "size_by_class": {
+    "open": {
+      "size": {
+        "mean": 40.64,
+        "median": 36.33,
+        "min": 22.36,
+        "p5": 29.29,
+        "p95": 65.08,
+        "max": 129.42
+      },
+      "w": 44.7,
+      "h": 38.4,
+      "aspect_w_over_h": 1.13
+    },
+    "short": {
+      "size": {
+        "mean": 40.97,
+        "median": 38.56,
+        "min": 26.32,
+        "p5": 30.63,
+        "p95": 60.45,
+        "max": 122.47
+      },
+      "w": 45.3,
+      "h": 40.1,
+      "aspect_w_over_h": 1.19
+    },
+    "mousebite": {
+      "size": {
+        "mean": 33.21,
+        "median": 32.0,
+        "min": 20.0,
+        "p5": 26.46,
+        "p95": 43.59,
+        "max": 90.93
+      },
+      "w": 35.5,
+      "h": 31.5,
+      "aspect_w_over_h": 1.14
+    },
+    "spur": {
+      "size": {
+        "mean": 33.88,
+        "median": 32.86,
+        "min": 23.37,
+        "p5": 28.28,
+        "p95": 43.89,
+        "max": 73.89
+      },
+      "w": 35.1,
+      "h": 33.1,
+      "aspect_w_over_h": 1.07
+    },
+    "copper": {
+      "size": {
+        "mean": 37.37,
+        "median": 35.94,
+        "min": 22.98,
+        "p5": 27.99,
+        "p95": 50.99,
+        "max": 79.94
+      },
+      "w": 37.7,
+      "h": 37.5,
+      "aspect_w_over_h": 1.0
+    },
+    "pin-hole": {
+      "size": {
+        "mean": 34.18,
+        "median": 32.94,
+        "min": 21.98,
+        "p5": 26.5,
+        "p95": 45.28,
+        "max": 120.95
+      },
+      "w": 34.9,
+      "h": 34.0,
+      "aspect_w_over_h": 1.03
+    }
+  },
+  "size_mm": {
+    "mean_side_mm": 0.76,
+    "image_side_mm": 13.3
+  },
+  "boxes_under_1pct_of_image": 98.2,
+  "boxes_under_32px": 32.0,
+  "annotation_checks": {
+    "invalid_boxes": 0,
+    "boxes_touching_border": 65,
+    "overlapping_box_pairs": 167
+  },
+  "image": {
+    "mode": [
+      "L",
+      "RGB"
+    ],
+    "sizes": [
+      "(640, 640)"
+    ],
+    "dark_fraction": {
+      "mean": 0.35,
+      "median": 0.32,
+      "min": 0.0,
+      "p5": 0.08,
+      "p95": 0.72,
+      "max": 0.86
+    },
+    "pixels_within_10_of_black_or_white_percent": 98.14
+  },
+  "difference": {
+    "diff_pixels_per_image": {
+      "mean": 7730.47,
+      "median": 5672.0,
+      "min": 135.0,
+      "p5": 1678.55,
+      "p95": 20772.1,
+      "max": 63239.0
+    },
+    "share_of_diff_pixels_outside_boxes": {
+      "mean": 0.75,
+      "median": 0.79,
+      "min": 0.0,
+      "p5": 0.42,
+      "p95": 0.95,
+      "max": 0.99
+    },
+    "overall_share_outside_boxes_percent": 84.7
+  },
+  "alignment": {
+    "pairs_with_structure": 1490,
+    "pairs_without_structure": 10,
+    "pairs_where_shift_reduces_difference_by_20pct": 139,
+    "share_percent": 9.3,
+    "shift_magnitude_px": {
+      "mean": 3.03,
+      "median": 3.0,
+      "min": 1.0,
+      "p5": 1.0,
+      "p95": 7.0,
+      "max": 10.0
+    },
+    "median_diff_pixels_before_after_percent": [
+      1.402,
+      1.358
+    ],
+    "shift_histogram_max_abs": {
+      "1": 23,
+      "2": 43,
+      "3": 40,
+      "4": 8,
+      "5": 10,
+      "6": 6,
+      "7": 3,
+      "8": 3,
+      "9": 1,
+      "10": 2
+    }
+  }
+}
