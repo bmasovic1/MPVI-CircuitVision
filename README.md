@@ -15,7 +15,7 @@ Glavno istraživačko pitanje je da li korištenje referentne (template) slike m
 
 - [x] Skelet repoa, učitavanje DeepPCB-a, podjela po grupama, konverzija u YOLO format
 - [x] Zajednička evaluacija (`src/evaluation/`): metrike, analiza grešaka, poređenje i robusnost
-- [ ] EDA (distribucija klasa, veličine boxova i pregled anotacija)
+- [x] EDA (distribucija klasa, veličine boxova i pregled anotacija)
 - [ ] Eksperiment 1: OpenCV + Random Forest/SVM
 - [ ] Eksperiment 2: Faster R-CNN
 - [ ] Eksperiment 3: YOLO baseline + YOLO s template informacijama + ablacija
