@@ -99,7 +99,7 @@ Konačna imena nosilaca upisati nakon dogovora unutar tima. Svaki nosilac eksper
 | Nedim Džindo | Eksperiment 1: OpenCV + Random Forest/SVM | `src/experiment_1_classical/` |
 | Član 2 | Eksperiment 2: Faster R-CNN | `src/experiment_2_faster_rcnn/` |
 | Berin Mašović | Eksperiment 3: YOLO baseline + YOLO + template + ablacija; zajednička evaluacija | `src/experiment_3_yolo_template/`, `src/evaluation/` |
-| Član 4 | Eksperiment 4: RT-DETR | `src/experiment_4_rtdetr/` |
+| Prašović Asmir| Eksperiment 4: RT-DETR | `src/experiment_4_rtdetr/` |
 
 ## Literatura
 
