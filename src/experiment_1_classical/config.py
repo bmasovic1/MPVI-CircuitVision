@@ -61,6 +61,7 @@ class CandidateConfig:
     min_area: int = 4  # najmanja površina komponente (px)
     max_area: int = 6000  # najveća površina komponente (px); veće su razlike strukture (npr. neporavnanje)
     box_padding: int = 10  # GT box je u prosjeku ~20 px veći od same razlike, tj. ~10 px sa svake strane
+    label_iou: float = 0.5  # prag IoU s GT boxom za dodjelu klase kandidatu (isti kao mAP@0.5 u evaluaciji)
 
     def __post_init__(self) -> None:
         _require(0 <= self.diff_threshold <= 255, f"diff_threshold mora biti u [0, 255], dobijeno {self.diff_threshold!r}")
@@ -68,6 +69,7 @@ class CandidateConfig:
         _require_odd(self.close_kernel, "close_kernel")
         _require(1 <= self.min_area < self.max_area, f"mora vrijediti 1 <= min_area < max_area (dobijeno {self.min_area!r}, {self.max_area!r})")
         _require(self.box_padding >= 0, f"box_padding mora biti >= 0, dobijeno {self.box_padding!r}")
+        _require(0.0 < self.label_iou <= 1.0, f"label_iou mora biti u (0, 1], dobijeno {self.label_iou!r}")
 
 
 @dataclass(frozen=True)

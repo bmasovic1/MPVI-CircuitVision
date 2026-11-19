@@ -67,6 +67,8 @@ def test_from_dict_rejects_unknown_or_malformed(data):
     lambda: CandidateConfig(close_kernel=0),
     lambda: CandidateConfig(min_area=50, max_area=50),
     lambda: CandidateConfig(box_padding=-1),
+    lambda: CandidateConfig(label_iou=0.0),
+    lambda: CandidateConfig(label_iou=1.5),
     lambda: FeatureConfig(crop_size=4),
     lambda: FeatureConfig(crop_size=32, hog_pixels_per_cell=5),  # ne dijeli crop_size
     lambda: FeatureConfig(hog_orientations=0),
