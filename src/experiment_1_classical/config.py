@@ -54,12 +54,13 @@ class SplitConfig:
 @dataclass(frozen=True)
 class CandidateConfig:
     """Oduzimanje test i template slike i izdvajanje kandidata (korak 3)."""
-    diff_threshold: int = 100  # prag na |test - temp| (0-255); isti kao DIFF_THR u src/data/eda.py
-    open_kernel: int = 3  # morfološko otvaranje: uklanja tanke konture (rubovi, JPEG šum)
+    # Vrijednosti su odabrane na uzorku TRAIN skupa (svaka 5. slika; recall@IoU0.5 granice kandidata ~95%):
+    diff_threshold: int = 100  # prag na |test - temp| (0-255); slike su binarne pa su pragovi 60-160 ekvivalentni
+    open_kernel: int = 3  # morfološko otvaranje: uklanja tanke (1-2 px) konture oko vodova
     close_kernel: int = 5  # morfološko zatvaranje: spaja dijelove istog defekta
-    min_area: int = 10  # najmanja površina komponente (px)
-    max_area: int = 6000  # najveća površina komponente (px); veće su gotovo sigurno razlike strukture
-    box_padding: int = 4  # proširenje boxa komponente (px) prema GT boxovima
+    min_area: int = 4  # najmanja površina komponente (px)
+    max_area: int = 6000  # najveća površina komponente (px); veće su razlike strukture (npr. neporavnanje)
+    box_padding: int = 10  # GT box je u prosjeku ~20 px veći od same razlike, tj. ~10 px sa svake strane
 
     def __post_init__(self) -> None:
         _require(0 <= self.diff_threshold <= 255, f"diff_threshold mora biti u [0, 255], dobijeno {self.diff_threshold!r}")
