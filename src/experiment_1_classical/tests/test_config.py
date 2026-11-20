@@ -8,7 +8,8 @@ import pytest
 from src.data.deeppcb import NAMES, split_by_group
 from src.experiment_1_classical import config as cfg_mod
 from src.experiment_1_classical.config import (BACKGROUND, DEFECT_CLASSES, CandidateConfig, ExperimentConfig,
-                                               FeatureConfig, RandomForestConfig, SplitConfig, SvmConfig, TrainConfig)
+                                               FeatureConfig, RandomForestConfig, SplitConfig, SvmConfig, TrainConfig,
+                                               TuneConfig)
 
 
 def test_default_config_is_valid():
@@ -40,6 +41,13 @@ def test_json_roundtrip_preserves_config(tmp_path: Path):
     loaded = ExperimentConfig.load(path)
     assert loaded == cfg
     assert loaded.train.rf_seeds == (5, 6)  # lista iz JSON-a vraćena u tuple
+
+
+def test_numeric_gamma_and_mixed_tune_grid_roundtrip(tmp_path: Path):
+    cfg = ExperimentConfig.from_dict({"svm": {"gamma": 0.01}, "tune": {"svm_gamma": ["scale", 0.1]}})
+    assert cfg.svm.gamma == 0.01 and cfg.tune.svm_gamma == ("scale", 0.1)
+    cfg.save(tmp_path / "c.json")
+    assert ExperimentConfig.load(tmp_path / "c.json") == cfg
 
 
 def test_from_dict_partial_keeps_defaults():
@@ -82,6 +90,14 @@ def test_from_dict_rejects_unknown_or_malformed(data):
     lambda: SvmConfig(C=0),
     lambda: SvmConfig(kernel="poly"),
     lambda: SvmConfig(gamma="x"),
+    lambda: SvmConfig(gamma=-0.1),
+    lambda: SvmConfig(gamma=True),
+    lambda: TuneConfig(rf_min_samples_leaf=()),
+    lambda: TuneConfig(rf_min_samples_leaf=(1, 1)),
+    lambda: TuneConfig(rf_min_samples_leaf=(0,)),
+    lambda: TuneConfig(rf_max_features=("all",)),
+    lambda: TuneConfig(svm_C=(0.0,)),
+    lambda: TuneConfig(svm_gamma=("scale", -1.0)),
     lambda: TrainConfig(rf_seeds=()),
     lambda: TrainConfig(rf_seeds=(1, 1)),
     lambda: TrainConfig(svm_seeds=(0.5,)),

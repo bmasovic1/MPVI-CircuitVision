@@ -36,6 +36,12 @@ def _require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def _valid_gamma(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    return value in ("scale", "auto") or (isinstance(value, (int, float)) and value > 0)
+
+
 def _require_odd(value: int, name: str) -> None:
     _require(isinstance(value, int) and value >= 1 and value % 2 == 1, f"{name} mora biti neparan cijeli broj >= 1 (dobijeno {value!r})")
 
@@ -114,14 +120,14 @@ class SvmConfig:
     """Hiperparametri SVM-a (korak 6); karakteristike se standardizuju u pipelineu (scaler se fituje samo na train)."""
     kernel: str = "rbf"
     C: float = 10.0
-    gamma: str = "scale"
+    gamma: str | float = "scale"  # 'scale', 'auto' ili pozitivan broj
     class_weight: str | None = "balanced"
     probability: bool = True  # potrebno za score u [0, 1] (docs/FORMAT.md)
 
     def __post_init__(self) -> None:
         _require(self.kernel in ("rbf", "linear"), f"kernel mora biti 'rbf' ili 'linear', dobijeno {self.kernel!r}")
         _require(self.C > 0, f"C mora biti > 0, dobijeno {self.C!r}")
-        _require(self.gamma in ("scale", "auto"), f"gamma mora biti 'scale' ili 'auto', dobijeno {self.gamma!r}")
+        _require(_valid_gamma(self.gamma), f"gamma mora biti 'scale', 'auto' ili pozitivan broj, dobijeno {self.gamma!r}")
         _require(self.class_weight in (None, "balanced"), f"class_weight mora biti None ili 'balanced', dobijeno {self.class_weight!r}")
 
 
@@ -138,6 +144,27 @@ class TrainConfig:
                      f"{name} mora biti neprazna lista različitih cijelih brojeva, dobijeno {seeds!r}")
 
 
+@dataclass(frozen=True)
+class TuneConfig:
+    """Mreža hiperparametara za izbor na VALIDACIJSKOM skupu (train.py --tune); kriterij je macro F1 kandidata.
+
+    Za gamma: 'scale' je 1/broj_karakteristika (nakon standardizacije), npr. ~0.0015 za 669 karakteristika.
+    """
+    rf_min_samples_leaf: tuple[int, ...] = (1, 2, 5)
+    rf_max_features: tuple[str, ...] = ("sqrt", "log2")
+    svm_C: tuple[float, ...] = (1.0, 10.0, 100.0)
+    svm_gamma: tuple[str | float, ...] = ("scale", 0.0005, 0.005)
+
+    def __post_init__(self) -> None:
+        for name in ("rf_min_samples_leaf", "rf_max_features", "svm_C", "svm_gamma"):
+            values = getattr(self, name)
+            _require(len(values) >= 1 and len(set(values)) == len(values), f"{name} mora biti neprazan, bez ponavljanja, dobijeno {values!r}")
+        _require(all(isinstance(v, int) and v >= 1 for v in self.rf_min_samples_leaf), "rf_min_samples_leaf: cijeli brojevi >= 1")
+        _require(all(v in ("sqrt", "log2") for v in self.rf_max_features), "rf_max_features: 'sqrt' ili 'log2'")
+        _require(all(isinstance(v, (int, float)) and not isinstance(v, bool) and v > 0 for v in self.svm_C), "svm_C: pozitivni brojevi")
+        _require(all(_valid_gamma(v) for v in self.svm_gamma), "svm_gamma: 'scale', 'auto' ili pozitivni brojevi")
+
+
 # ----------------------------------------------------------------------------- cijela konfiguracija
 
 @dataclass(frozen=True)
@@ -151,6 +178,7 @@ class ExperimentConfig:
     random_forest: RandomForestConfig = field(default_factory=RandomForestConfig)
     svm: SvmConfig = field(default_factory=SvmConfig)
     train: TrainConfig = field(default_factory=TrainConfig)
+    tune: TuneConfig = field(default_factory=TuneConfig)
 
     def results_dir(self, variant: str) -> Path:
         """Folder rezultata varijante, npr. results/exp1_rf (docs/FORMAT.md: results/<eksperiment>/)."""
