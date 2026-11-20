@@ -51,6 +51,32 @@ class DeepPCBDetection(torch.utils.data.Dataset):
         return image, target
 
 
+class RandomFlip:
+    """Augmentacija za trening: nasumično okretanje lijevo-desno i gore-dolje.
+
+    Okretanje ne mijenja tip defekta (prekid ostaje prekid), pa je bezopasno za PCB.
+    Boxovi se preračunavaju: kod okretanja lijevo-desno novi x1 = W - stari x2, novi x2 = W - stari x1
+    (analogno za y kod okretanja gore-dolje). Koristi se samo za trening, ne za val/test.
+
+    p_horizontal / p_vertical: vjerovatnoća okretanja (1.0 = uvijek, korisno za provjeru).
+    """
+
+    def __init__(self, p_horizontal=0.5, p_vertical=0.5):
+        self.p_horizontal = p_horizontal
+        self.p_vertical = p_vertical
+
+    def __call__(self, image, target):
+        _, h, w = image.shape
+        boxes = target["boxes"].clone()
+        if torch.rand(1).item() < self.p_horizontal:
+            image = image.flip(-1)  # zadnja os = širina
+            boxes[:, [0, 2]] = w - boxes[:, [2, 0]]
+        if torch.rand(1).item() < self.p_vertical:
+            image = image.flip(-2)  # predzadnja os = visina
+            boxes[:, [1, 3]] = h - boxes[:, [3, 1]]
+        return image, {**target, "boxes": boxes}
+
+
 def collate_fn(batch):
     """Slike u batchu se ne slažu u jedan tensor (različit broj boxova), nego ostaju liste."""
     return tuple(zip(*batch))
