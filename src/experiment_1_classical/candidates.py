@@ -42,7 +42,8 @@ class Candidates:
         return self.labels == self.component_ids[index]
 
 
-def _check_pair(test: np.ndarray, temp: np.ndarray) -> None:
+def check_image_pair(test: np.ndarray, temp: np.ndarray) -> None:
+    """ValueError ako test/temp nisu 2D uint8 nizovi istog oblika."""
     for name, img in (("test", test), ("temp", temp)):
         if not isinstance(img, np.ndarray) or img.ndim != 2 or img.dtype != np.uint8:
             raise ValueError(f"{name} mora biti 2D numpy niz tipa uint8 (sivi tonovi)")
@@ -57,7 +58,7 @@ def _kernel(size: int) -> np.ndarray:
 def difference_mask(test: np.ndarray, temp: np.ndarray, cfg: CandidateConfig | None = None) -> np.ndarray:
     """Binarna maska razlike (uint8, 0/1) nakon praga, otvaranja i zatvaranja."""
     cfg = cfg or CandidateConfig()
-    _check_pair(test, temp)
+    check_image_pair(test, temp)
     mask = (cv2.absdiff(test, temp) > cfg.diff_threshold).astype(np.uint8)
     if cfg.open_kernel > 1:
         mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, _kernel(cfg.open_kernel))

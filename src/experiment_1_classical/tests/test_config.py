@@ -71,7 +71,11 @@ def test_from_dict_rejects_unknown_or_malformed(data):
     lambda: CandidateConfig(label_iou=1.5),
     lambda: FeatureConfig(crop_size=4),
     lambda: FeatureConfig(crop_size=32, hog_pixels_per_cell=5),  # ne dijeli crop_size
+    lambda: FeatureConfig(crop_size=32, hog_pixels_per_cell=32),  # blok 2x2 ćelije ne staje u isječak
     lambda: FeatureConfig(hog_orientations=0),
+    lambda: FeatureConfig(groups=()),
+    lambda: FeatureConfig(groups=("geometry", "geometry")),
+    lambda: FeatureConfig(groups=("geometry", "color")),
     lambda: RandomForestConfig(n_estimators=0),
     lambda: RandomForestConfig(max_depth=0),
     lambda: RandomForestConfig(class_weight="auto"),

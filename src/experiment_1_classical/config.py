@@ -24,6 +24,7 @@ from src.data.deeppcb import DEFAULT_ROOT, NAMES
 EXPERIMENT = "exp1"
 VARIANTS = ("rf", "svm", "localization_only")  # varijante u results/results.csv (docs/FORMAT.md)
 SPLITS = ("val", "test")  # skupovi za koje se pišu predikcije
+FEATURE_GROUPS = ("geometry", "polarity", "topology", "hog")  # grupe karakteristika (features.py)
 BACKGROUND = 0  # oznaka kandidata koji nije defekt (u predikcije se ne upisuje)
 DEFECT_CLASSES = tuple(sorted(NAMES))  # (1, ..., 6) kao u DeepPCB-u
 
@@ -75,15 +76,19 @@ class CandidateConfig:
 @dataclass(frozen=True)
 class FeatureConfig:
     """Ekstrakcija karakteristika po kandidatu (korak 5)."""
-    crop_size: int = 32  # stranica isječka (px) na koji se svodi okolina kandidata
+    groups: tuple[str, ...] = FEATURE_GROUPS  # koje grupe karakteristika se koriste (ablacija: izostaviti grupu)
+    crop_size: int = 32  # stranica isječka (px) na koji se svodi box kandidata za HOG
     hog_orientations: int = 9
     hog_pixels_per_cell: int = 8
 
     def __post_init__(self) -> None:
+        _require(len(self.groups) >= 1 and len(set(self.groups)) == len(self.groups) and set(self.groups) <= set(FEATURE_GROUPS),
+                 f"groups mora biti neprazan podskup od {FEATURE_GROUPS} bez ponavljanja, dobijeno {self.groups!r}")
         _require(self.crop_size >= 8, f"crop_size mora biti >= 8, dobijeno {self.crop_size!r}")
         _require(self.hog_orientations >= 1, f"hog_orientations mora biti >= 1, dobijeno {self.hog_orientations!r}")
-        _require(1 <= self.hog_pixels_per_cell <= self.crop_size and self.crop_size % self.hog_pixels_per_cell == 0,
-                 "hog_pixels_per_cell mora dijeliti crop_size")
+        _require(1 <= self.hog_pixels_per_cell and self.crop_size % self.hog_pixels_per_cell == 0
+                 and self.crop_size >= 2 * self.hog_pixels_per_cell,
+                 "hog_pixels_per_cell mora dijeliti crop_size, a crop_size mora biti >= 2 * hog_pixels_per_cell (HOG blok je 2x2 ćelije)")
 
 
 @dataclass(frozen=True)
